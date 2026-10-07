@@ -4,7 +4,6 @@ import sys
 
 
 class Aleatorios:
-    """Método Congruente Linear: X(i+1) = (a*X(i) + c) mod M."""
 
     A, C, M = 1664525, 1013904223, 2 ** 32
 
@@ -25,7 +24,7 @@ class Fila:
     def __init__(self, nome, cfg):
         self.nome = nome
         self.servidores = cfg["servers"]
-        self.capacidade = cfg.get("capacity")  # None = infinita
+        self.capacidade = cfg.get("capacity")  
         self.min_serv, self.max_serv = cfg["minService"], cfg["maxService"]
         self.min_cheg, self.max_cheg = cfg.get("minArrival"), cfg.get("maxArrival")
         self.rotas = []
@@ -39,7 +38,7 @@ class Simulador:
         self.filas = {n: Fila(n, q) for n, q in cfg["queues"].items()}
         for r in cfg.get("network") or []:
             self.filas[r["source"]].rotas.append((r["target"], r["probability"]))
-        for f in self.filas.values():  # o que falta para 1 é saída do sistema
+        for f in self.filas.values():  
             resto = 1 - sum(p for _, p in f.rotas)
             if resto > 1e-9:
                 f.rotas.append((None, resto))
